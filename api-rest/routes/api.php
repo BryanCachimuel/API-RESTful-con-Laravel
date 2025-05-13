@@ -37,3 +37,10 @@ Route::put('users/{id}', [UserController::class, 'update']);
 
 // Eliminar registros
 Route::delete('users/{id}', [UserController::class, 'destroy']);
+
+/*
+Todas las rutas anteriores se reducen a esta script
+siempre y cuando en el controlador las rutas que buscan por $id se cambien por 
+parámetro user
+Route::apiResource('users', UserController::class);
+*/
