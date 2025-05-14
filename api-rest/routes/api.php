@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,3 +45,6 @@ siempre y cuando en el controlador las rutas que buscan por $id se cambien por
 parámetro user
 Route::apiResource('users', UserController::class);
 */
+
+/* Rutas para las tareas */
+Route::apiResource('task', TaskController::class);
