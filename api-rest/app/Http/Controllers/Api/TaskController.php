@@ -14,7 +14,19 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task = Task::all();
+        /* utilizando el helper
+        return request('perPage');*/
+        //$task = Task::all();
+        
+        $tasks = Task::query();
+
+        if (request('perPage')) {
+           $task = $tasks->paginate(request('perPage'));
+        } else {
+            $task = $tasks->get();
+        }
+
+        //$task = Task::paginate(5);
         return response()->json($task);
     }
 
