@@ -44,14 +44,19 @@ class TaskController extends Controller
     {
         $task = Task::find($task);
         $task->update($request->all());
-        return response()->json($task);
+        return response()->json($task, 200);
     }
 
     /**
      * Remove the specified resource from storage.
+     * con el código 204 nos indica que se a eliminado el registro
+     * pero por consola no muestra nada
      */
     public function destroy($task)
     {
-        //
+        $task = Task::find($task);
+        $task->delete();
+        //return response()->json($task, 204);
+        return response()->json($task);
     }
 }
