@@ -30,19 +30,22 @@ class TaskController extends Controller
 
     /**
      * Display the specified resource.
+     * Model Binding consiste en agregar el nombre del modelo como parámetro de la función
+     * y comentar la parte de encontrar la tarea, el proceso se simplifica tal como se ve
+     * en la función show
      */
-    public function show($task)
+    public function show(Task $task)
     {
-        $task = Task::find($task);
+        //$task = Task::find($task);
         return response()->json($task);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $task)
+    public function update(Request $request, Task $task)
     {
-        $task = Task::find($task);
+        //$task = Task::find($task);
         $task->update($request->all());
         return response()->json($task, 200);
     }
@@ -52,9 +55,9 @@ class TaskController extends Controller
      * con el código 204 nos indica que se a eliminado el registro
      * pero por consola no muestra nada
      */
-    public function destroy($task)
+    public function destroy(Task $task)
     {
-        $task = Task::find($task);
+        //$task = Task::find($task);
         $task->delete();
         //return response()->json($task, 204);
         return response()->json($task);
