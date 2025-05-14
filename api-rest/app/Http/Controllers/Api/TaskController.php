@@ -21,9 +21,18 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      * Agregando un código de estado 201 que indica 
      * creación con éxito de registro
+     * 
+     * 1er forma -> 'user_id' => 'required|exists:users,id',
+     * 2da forma -> 'user_id' => 'user_id' => ['required', 'exists:users,id'],
      */
     public function store(Request $request)
     {
+        // aplicando reglas de validación
+        $request->validate([
+            'body' => 'required',
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
+
         $task = Task::create($request->all());
         return response()->json($task, 201);
     }
@@ -44,7 +53,12 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Task $task)
-    {
+    {   
+        // aplicando reglas de validación
+        $request->validate([
+            'body' => 'required',
+            'user_id' => ['nullable', 'exists:users,id'],
+        ]);
         //$task = Task::find($task);
         $task->update($request->all());
         return response()->json($task, 200);
