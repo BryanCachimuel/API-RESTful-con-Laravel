@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -10,41 +11,39 @@ class UserController extends Controller
     // Listado de usuarios
     public function index()
     {
-        return response()->json([
-            'message'=> 'Listado de Usuarios'
-        ]);
+        $user = User::all();
+        return response()->json($user);
     }
 
     // crear usuarios
-    public function store()
+    public function store(Request $request)
     {
-        return response()->json([
-            'message' => 'Usuario creado'
-        ]);
+        $user = User::create($request->all());
+        return response()->json($user, 201);
     }
 
     // buscar usuario por id
     public function show($id)
     {
-         return response()->json([
-            'message' => 'Usuario recuperado: ' . $id
-        ]);
+         $user = User::find($id);
+         return response()->json($user);
     }
 
     // actualizar usuario por id
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        return response()->json([
-            'message' => 'Usuario actualizado: ' . $id
-        ]);
+        $user = User::find($id);
+        $user->update($request->all());
+        return response()->json($user);
     }
 
     // eliminar usuario por id
     public function destroy($id)
     {
-         return response()->json([
-            'message' => 'Usuario eliminado: ' . $id
-        ]);
+        $user = User::find($id);
+        $user->delete();
+        // return response()->json($user, 204);
+        return response()->json($user);
     }
 }
 
