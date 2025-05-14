@@ -33,7 +33,8 @@ class TaskController extends Controller
      */
     public function show($task)
     {
-        //
+        $task = Task::find($task);
+        return response()->json($task);
     }
 
     /**
@@ -41,7 +42,9 @@ class TaskController extends Controller
      */
     public function update(Request $request, $task)
     {
-        //
+        $task = Task::find($task);
+        $task->update($request->all());
+        return response()->json($task);
     }
 
     /**
