@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /* 
@@ -16,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
 */
 class Task extends Model
 {
+    // este modelo utilizará un factory
+    use HasFactory;
+
     protected $table = 'tasks';
     protected $fillable = [
         'body',
