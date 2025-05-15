@@ -56,6 +56,12 @@ class TaskController extends Controller
                 }
             }
 
+            // incluir relaciones
+            if(request('include')){
+                $include = explode(',', request('include'));
+                $tasks = $tasks->with($include);
+            }
+
             // crear consulta
             if (request('perPage')) {
                 $task = $tasks->paginate(request('perPage'));
