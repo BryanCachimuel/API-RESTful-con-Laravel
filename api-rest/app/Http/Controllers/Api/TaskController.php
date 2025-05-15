@@ -42,6 +42,20 @@ class TaskController extends Controller
                 $tasks->select($selectArray);
             }
 
+            // Aplicar orden
+            if (request('sort')) {
+                $sordFields = explode(',', request('sort'));
+                foreach($sordFields as $sortField){
+                    $direction = 'asc';
+
+                    if(substr($sortField, 0, 1) == '-'){
+                        $direction = 'desc';
+                        $sortField = substr($sortField,1);
+                    }
+                    $tasks->orderBy($sortField, $direction);
+                }
+            }
+
             // crear consulta
             if (request('perPage')) {
                 $task = $tasks->paginate(request('perPage'));
