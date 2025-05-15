@@ -35,14 +35,19 @@ class TaskController extends Controller
                 }
             }*/
 
+            // aplicar select
+            if(request(('select'))){
+                $select = request('select');
+                $selectArray = explode(',',$select);
+                $tasks->select($selectArray);
+            }
+
             // crear consulta
             if (request('perPage')) {
                 $task = $tasks->paginate(request('perPage'));
             } else {
                 $task = $tasks->get();
             }
-
-        
 
         //$task = Task::paginate(5);
         return response()->json($task);
