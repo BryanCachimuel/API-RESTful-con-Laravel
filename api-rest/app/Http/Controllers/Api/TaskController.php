@@ -17,14 +17,32 @@ class TaskController extends Controller
         /* utilizando el helper
         return request('perPage');*/
         //$task = Task::all();
-        
+
         $tasks = Task::query();
 
-        if (request('perPage')) {
-           $task = $tasks->paginate(request('perPage'));
-        } else {
-            $task = $tasks->get();
-        }
+        /*if (request('filters')) {
+            $filters = request('filters');
+
+            //Aplicar filtros
+            foreach ($filters as $field => $conditions) {
+                foreach ($conditions as $operator => $value) {
+                   if(in_array($operator, ['=','>','<','>=','<=','!='])){
+                    $tasks->where($field, $operator, $value);
+                   }
+                   if($operator == 'like'){
+                    $tasks->where($field,'like',"%$value%");
+                   }
+                }
+            }*/
+
+            // crear consulta
+            if (request('perPage')) {
+                $task = $tasks->paginate(request('perPage'));
+            } else {
+                $task = $tasks->get();
+            }
+
+        
 
         //$task = Task::paginate(5);
         return response()->json($task);
@@ -66,7 +84,7 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateTaskRequest $request, Task $task)
-    {   
+    {
         /* aplicando reglas de validación
         $request->validate([
             'body' => 'required',
