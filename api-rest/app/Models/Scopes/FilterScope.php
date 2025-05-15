@@ -13,6 +13,21 @@ class FilterScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        //
+        if (empty(request('filters'))) {
+            return;
+        }
+        $filters = request('filters');
+
+            //Aplicar filtros
+            foreach ($filters as $field => $conditions) {
+                foreach ($conditions as $operator => $value) {
+                   if(in_array($operator, ['=','>','<','>=','<=','!='])){
+                    $builder->where($field, $operator, $value);
+                   }
+                   if($operator == 'like'){
+                    $builder->where($field,'like','%'.$value.'%');
+                   }
+                }
+            }
     }
 }
