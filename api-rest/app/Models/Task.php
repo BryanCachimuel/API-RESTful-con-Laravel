@@ -2,15 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\FilterScope;
-use App\Models\Scopes\IncludeScope;
-use App\Models\Scopes\SelectScope;
-use App\Models\Scopes\SortScope;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-
 
 /* 
     Para designar que una tabla de la base de datos
@@ -23,15 +15,7 @@ use Illuminate\Database\Eloquent\Model;
     de crear un registro
 */
 
-// scope global
-#[ScopedBy([
-    FilterScope::class,
-    SelectScope::class,
-    SortScope::class,
-    IncludeScope::class
-])]
-
-class Task extends Model
+class Task extends Api
 {
     // este modelo utilizará un factory
     use HasFactory;
@@ -45,17 +29,6 @@ class Task extends Model
     /*protected $guarded = [
         ''
     ];*/
-
-    // scope local
-    public function scopeGetOrPaginate($query)
-    {
-         // crear consulta
-            if (request('perPage')) {
-                return $query->paginate(request('perPage'));
-            } 
-            
-            return $query->get();
-    }
 
     // aplicando la relación con tareas
     public function user()
