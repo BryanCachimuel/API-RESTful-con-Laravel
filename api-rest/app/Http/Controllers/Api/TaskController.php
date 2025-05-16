@@ -18,17 +18,10 @@ class TaskController extends Controller
         return request('perPage');*/
         //$task = Task::all();
 
-        $tasks = Task::query();
-
-            // crear consulta
-            if (request('perPage')) {
-                $task = $tasks->paginate(request('perPage'));
-            } else {
-                $task = $tasks->get();
-            }
+        $tasks = Task::getOrPaginate();
 
         //$task = Task::paginate(5);
-        return response()->json($task);
+        return response()->json($tasks);
     }
 
     /**
