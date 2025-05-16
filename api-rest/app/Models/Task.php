@@ -2,8 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\FilterScope;
+use App\Models\Scopes\IncludeScope;
+use App\Models\Scopes\SelectScope;
+use App\Models\Scopes\SortScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+
 
 /* 
     Para designar que una tabla de la base de datos
@@ -15,6 +22,14 @@ use Illuminate\Database\Eloquent\Model;
     $guarded -> indica que campos no se quiere que se tome al momento
     de crear un registro
 */
+
+#[ScopedBy([
+    FilterScope::class,
+    SelectScope::class,
+    SortScope::class,
+    IncludeScope::class
+])]
+
 class Task extends Model
 {
     // este modelo utilizará un factory
