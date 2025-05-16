@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
     de crear un registro
 */
 
+// scope global
 #[ScopedBy([
     FilterScope::class,
     SelectScope::class,
@@ -44,6 +45,17 @@ class Task extends Model
     /*protected $guarded = [
         ''
     ];*/
+
+    // scope local
+    public function scopeGetOrPaginate($query)
+    {
+         // crear consulta
+            if (request('perPage')) {
+                return $query->paginate(request('perPage'));
+            } 
+            
+            return $query->get();
+    }
 
     // aplicando la relación con tareas
     public function user()
