@@ -20,48 +20,6 @@ class TaskController extends Controller
 
         $tasks = Task::query();
 
-        /*if (request('filters')) {
-            $filters = request('filters');
-
-            //Aplicar filtros
-            foreach ($filters as $field => $conditions) {
-                foreach ($conditions as $operator => $value) {
-                   if(in_array($operator, ['=','>','<','>=','<=','!='])){
-                    $tasks->where($field, $operator, $value);
-                   }
-                   if($operator == 'like'){
-                    $tasks->where($field,'like',"%$value%");
-                   }
-                }
-            }*/
-
-            // aplicar select
-            if(request(('select'))){
-                $select = request('select');
-                $selectArray = explode(',',$select);
-                $tasks->select($selectArray);
-            }
-
-            // Aplicar orden
-            if (request('sort')) {
-                $sordFields = explode(',', request('sort'));
-                foreach($sordFields as $sortField){
-                    $direction = 'asc';
-
-                    if(substr($sortField, 0, 1) == '-'){
-                        $direction = 'desc';
-                        $sortField = substr($sortField,1);
-                    }
-                    $tasks->orderBy($sortField, $direction);
-                }
-            }
-
-            // incluir relaciones
-            if(request('include')){
-                $include = explode(',', request('include'));
-                $tasks = $tasks->with($include);
-            }
-
             // crear consulta
             if (request('perPage')) {
                 $task = $tasks->paginate(request('perPage'));
