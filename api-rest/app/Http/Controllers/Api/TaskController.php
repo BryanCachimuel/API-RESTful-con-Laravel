@@ -33,7 +33,8 @@ class TaskController extends Controller implements HasMiddleware
         $tasks = Task::getOrPaginate();
 
         //$task = Task::paginate(5);
-        return response()->json($tasks);
+        //return response()->json($tasks);
+        return TaskResource::collection($tasks);
     }
 
     /**
@@ -58,7 +59,8 @@ class TaskController extends Controller implements HasMiddleware
         $data['user_id'] = auth('api')->user()->id;
 
         $task = Task::create($data);
-        return response()->json($task, 201);
+        //return response()->json($task, 201);
+        return TaskResource::make($task);
     }
 
     /**
@@ -87,7 +89,9 @@ class TaskController extends Controller implements HasMiddleware
         ]);*/
         //$task = Task::find($task);
         $task->update($request->all());
-        return response()->json($task, 200);
+        //return response()->json($task, 200);
+
+        return TaskResource::make($task);
     }
 
     /**
