@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -69,7 +70,9 @@ class TaskController extends Controller implements HasMiddleware
     public function show(Task $task)
     {
         //$task = Task::find($task);
-        return response()->json($task);
+        //return response()->json($task);
+        
+        return TaskResource::make($task);
     }
 
     /**
