@@ -55,3 +55,8 @@ Route::apiResource('users', UserController::class);
 
 /* Rutas para las tareas */
 Route::apiResource('task', TaskController::class);
+
+/* ruta de pruebas */
+Route::get('prueba', function(){
+    return auth('api')->user();
+});
