@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\Tag;
 use App\Models\Task;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -25,5 +28,9 @@ class DatabaseSeeder extends Seeder
         Task::factory(100)->create([
             'user_id' => $user->id,
         ]);
+
+        Category::factory(10)->create();
+        Post::factory(100)->create();
+        Tag::factory(10)->create();
     }
 }
