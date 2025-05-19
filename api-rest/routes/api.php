@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -56,6 +57,9 @@ Route::apiResource('users', UserController::class);
 
 /* Rutas para las tareas */
 Route::apiResource('task', TaskController::class);
+
+/* Rutas para las categorias */
+Route::apiResource('categories', CategoryController::class);
 
 /* ruta de pruebas */
 Route::get('prueba', function(){
