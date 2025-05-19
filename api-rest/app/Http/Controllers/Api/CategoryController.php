@@ -6,12 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class CategoryController extends Controller
+class CategoryController extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
      */
+
+     public static function middleware(): array
+    {
+        return [
+            new Middleware('auth:api', except: ['index','show']),
+        ];
+    }
+
     public function index()
     {
         $categories = Category::getOrPaginate();
@@ -39,7 +49,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return CategoryResource::make($category);
     }
 
     /**
@@ -47,7 +57,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $category->update($data);
+
+        return CategoryResource::make($category);
     }
 
     /**
@@ -55,6 +71,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        /* este scripr cumple la misma función que el return de abajo
+        return response()->json($category, 204);
+        */
+        return response()->noContent();
     }
 }
