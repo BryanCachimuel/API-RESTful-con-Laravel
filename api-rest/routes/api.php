@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -60,6 +61,9 @@ Route::apiResource('task', TaskController::class);
 
 /* Rutas para las categorias */
 Route::apiResource('categories', CategoryController::class);
+
+/* Rutas para los post */
+Route::apiResource('posts', PostController::class);
 
 /* ruta de pruebas */
 Route::get('prueba', function(){
