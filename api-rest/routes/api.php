@@ -63,6 +63,7 @@ Route::apiResource('task', TaskController::class);
 Route::apiResource('categories', CategoryController::class);
 
 /* Rutas para los post */
+Route::post('posts/{post}/tags', [PostController::class, 'tags']);
 Route::apiResource('posts', PostController::class);
 
 /* ruta de pruebas */
