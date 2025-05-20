@@ -54,7 +54,7 @@ class PostController extends Controller implements HasMiddleware
      */
     public function show(Post $post)
     {
-        //
+        return PostResource::make($post);
     }
 
     /**
@@ -62,7 +62,18 @@ class PostController extends Controller implements HasMiddleware
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'slug' => 'required|unique:posts,slug,' . $post->id,
+            'excerpt' => 'required',
+            'body' => 'required',
+            'image' => 'nullable|image',
+            'is_published' => 'nullable|boolean',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $post->update($data);
+        return PostResource::make($post);
     }
 
     /**
@@ -70,6 +81,7 @@ class PostController extends Controller implements HasMiddleware
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response()->json(null, 204);
     }
 }
