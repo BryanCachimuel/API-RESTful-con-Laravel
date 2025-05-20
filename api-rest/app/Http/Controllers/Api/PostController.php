@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -51,6 +52,28 @@ class PostController extends Controller implements HasMiddleware
         $data['user_id'] = auth('api')->id();
 
         $post = Post::create($data);
+        return PostResource::make($post);
+    }
+
+    public function tags(Request $request, Post $post)
+    {
+        $data = $request->validate([
+            'tags' => 'required|array|min:1'
+        ]);
+
+        $tags = [];
+
+        foreach($request->tags as $tag){
+            $tags[] = Tag::firstOrCreate([
+                'name' => $tag
+            ])->id;
+        }
+
+        $post->tags()->sync($tags);
+
+        // cargue las relaciones
+        $post->load('tags');
+
         return PostResource::make($post);
     }
 
