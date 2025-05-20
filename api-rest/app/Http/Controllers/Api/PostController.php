@@ -8,6 +8,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller implements HasMiddleware
 {
@@ -43,6 +44,10 @@ class PostController extends Controller implements HasMiddleware
             'category_id' => 'required|exists:categories,id',
         ]);
 
+        if($request->hasFile('image')){
+            $data['image_path'] = Storage::put('images', $request->file('image'));
+        }
+
         $data['user_id'] = auth('api')->id();
 
         $post = Post::create($data);
@@ -71,6 +76,13 @@ class PostController extends Controller implements HasMiddleware
             'is_published' => 'nullable|boolean',
             'category_id' => 'required|exists:categories,id',
         ]);
+
+        if($request->hasFile('image')){
+            if($post->image_path){
+                Storage::delete($post->image_path);
+            }
+            $data['image_path'] = Storage::put('images', $request->file('image'));
+        }
 
         $post->update($data);
         return PostResource::make($post);
