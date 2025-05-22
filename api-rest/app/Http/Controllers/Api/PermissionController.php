@@ -38,24 +38,31 @@ class PermissionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Permission $permission)
+    public function show(ModelsPermission $permission)
     {
-        
+        return PermissionResource::make($permission);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Permission $permission)
+    public function update(Request $request, ModelsPermission $permission)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|unique:permissions,name,' . $permission->id,
+        ]);
+
+        $permission->update($data);
+
+        return PermissionResource::make($permission);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Permission $permission)
+    public function destroy(ModelsPermission $permission)
     {
-        //
+        $permission->delete();
+        return response()->json(null, 204);
     }
 }
