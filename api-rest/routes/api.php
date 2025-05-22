@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
@@ -55,6 +56,9 @@ siempre y cuando en el controlador las rutas que buscan por $id se cambien por
 parámetro user
 Route::apiResource('users', UserController::class);
 */
+
+/* Rutas para permission */
+Route::apiResource('permissions', PermissionController::class);
 
 /* Rutas para las tareas */
 Route::apiResource('task', TaskController::class);
