@@ -5,16 +5,30 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PermissionResource;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Contracts\Permission;
 use Spatie\Permission\Models\Permission as ModelsPermission;
 
-class PermissionController extends Controller
+class PermissionController extends Controller implements HasMiddleware
 {
     /**
      * Display a listing of the resource.
      */
+
+     public static function middleware(): array
+    {
+        return [
+            new Middleware('auth:api'),
+        ];
+    }
+
     public function index()
     {
+
+        //Gate::authorize('permissions.index','api');
+
         $permissions = ModelsPermission::all();
         return PermissionResource::collection($permissions);
     }
