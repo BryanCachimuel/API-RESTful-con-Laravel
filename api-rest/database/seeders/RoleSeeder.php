@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
         ]);
 
         $role->syncPermissions([
-             'permissions.index',
+            'permissions.index',
             'permissions.store',
             'permissions.show',
             'permissions.update',
